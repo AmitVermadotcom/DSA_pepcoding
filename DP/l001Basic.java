@@ -345,6 +345,40 @@ public class l001Basic{
         System.out.println(maxGold);
     }
 
+     public static int goldMine_dp(int[][] arr) {
+        int n = arr.length, m = arr[0].length;
+        int[][] dir = { { 0, 1 }, { 1, 1 }, { -1, 1 } };
+
+        int[][] dp = new int[n][m];
+        for (int c = arr[0].length - 1; c >= 0; c--) {
+            for (int r = arr.length - 1; r >= 0; r--) {
+                if (c == arr[0].length - 1) {
+                    dp[r][c] = arr[r][c];
+                    continue;
+                }
+
+                int maxGold = 0;
+                for (int d = 0; d < dir.length; d++) {
+                    int x = r + dir[d][0];
+                    int y = c + dir[d][1];
+
+                    if (x >= 0 && y >= 0 && x < arr.length && y < arr[0].length)
+                        maxGold = Math.max(maxGold, dp[x][y] + arr[r][c]);
+                }
+
+                dp[r][c] = maxGold;
+            }
+        }
+
+        int maxGold = 0;
+        for (int i = 0; i < n; i++) {
+            maxGold = Math.max(maxGold, dp[i][0]);
+        }
+
+        // print2D(dp);
+        return maxGold;
+    }
+
 
     public static void main(String[] args){
         // fibo();
