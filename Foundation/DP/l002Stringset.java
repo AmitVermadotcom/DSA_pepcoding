@@ -119,9 +119,10 @@ public static String longestPalindrome(String s) {
         
         return count;
     }
+ 
+    // leetcode-1143 longest common subsequence...
 
-    // leetcode-1143
-     public int LCS_memo(String s1, String s2,int n,int m,int[][] dp) {
+    public int LCS_memo(String s1, String s2,int n,int m,int[][] dp) {
         if(n == 0 || m == 0){
             return dp[n][m]=0;
         }
@@ -164,6 +165,35 @@ public static String longestPalindrome(String s) {
         
         for(int[] d:dp) Arrays.fill(d,-1);
         return LCS_memo(text1, text2,n,m,dp);
+    }
+
+
+    // longest common substring 
+    int mx=0;
+    int longestCommonSubstr(String S1, String S2, int n, int m){
+        // code here
+        longestCommonSubstr_memo(n,m,s1,s2);
+        return mx;
+        
+    }
+
+    void longestCommonSubstr_memo(int n,int m,String s1,String s2,int ans){
+        if(n == 0 || m == 0){
+            return;
+        }
+
+        if(dp[n][m] != 1) return dp[n][m];
+        if(s1.charAt(n) == s2.charAt(m)){
+            longestCommonSubstr_memo(n-1,m-1,s1,s2,ans+1);
+        }
+        else{
+            if(mx < ans) mx=ans;
+            ans=0;
+            longestCommonSubstr_memo(n,m-1,s1,s2,ans);
+            if(mx < ans) mx=ans;
+            ans=0;
+            longestCommonSubstr_memo(n-1,m,s1,s2,ans)
+        }
     }
 
     public static void main(String[] args){
