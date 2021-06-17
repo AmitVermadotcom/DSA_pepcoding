@@ -12,8 +12,8 @@
       "program": "c:\\Users\\Amit Verma\\Desktop\\PEPCODING\\Level_Up\\Tree\\build\\Debug\\outDebug",
       "internalConsoleOptions": "openOnSessionStart",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "externalConsole": true
+      "miDebuggerPath": "C:\\Program Files (x86)\\mingw-w64\\i686-8.1.0-posix-dwarf-rt_v6-rev0\\mingw32\\bin\\gdb.exe",
+      "externalConsole": false
     }
   ]
 }

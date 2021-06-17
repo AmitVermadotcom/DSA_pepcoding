@@ -197,7 +197,6 @@ public class l001 {
         kDown(root.right,time+1,block,ans);
     }
 
-
     // burning tree with water
     // -2 -> fire will not reach that node.
     //  if greater than zero -> fire with time t.
@@ -272,7 +271,7 @@ public class l001 {
     }
 
 
-     class BSTIterator {
+    class BSTIterator {
 
         private ArrayDeque<TreeNode> st = new ArrayDeque<>(); // addFirst, removeFirst
 
@@ -297,5 +296,92 @@ public class l001 {
         public boolean hasNext() {
             return this.st.size() != 0;
         }
+    }
+
+
+    // left view of binary tree ===========================
+    public static ArrayList<Integer> leftView(TreeNode root) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        if(root == null) return ans;
+        
+        LinkedList<TreeNode> que = new LinkedList<>();
+        que.addLast(root);
+        while(que.size() != 0){
+            int size = que.size();
+            ans.add(que.getFirst().val);
+            while(size-->0){
+                TreeNode rnode = que.removeFirst();
+                if(rnode.left != null) que.addLast(rnode.left);
+                if(rnode.right != null) que.addLast(rnode.right);
+            }
+        }
+        return ans;
+    }
+
+
+    // Vertical view of binary tree=====================
+
+    public static void widhtOfTree(TreeNode root,int vl,int[] minmax){  //widht or shadow of tree
+        if(root == null) return;
+        minmax[0] = Math.min(minmax[0],vl);
+        minmax[1] = Math.max(minmax[1],vl);
+        
+        widhtOfTree(root.left,vl-1,minmax);
+        widhtOfTree(root.right,vl+1,minmax);
+    }
+
+    public class vPair{
+        int vl=0;
+        TreeNode node = null;
+        vPair(int vl,TreeNode node){
+            this.vl = vl;
+            this.node = node;
+        }
+    }
+
+    public static ArrayList<ArrayList<Integer>> verticalOrderTraversal(TreeNode root) {
+       ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        if(root == null) return ans;
+        int[] minmax = new int[2];
+        widhtOfTree(root,0,minmax);
+        int len = minmax[1]-minmax[0] + 1;
+        for(int i=0;i<len;i++) ans.add(new ArrayList<>());
+        LinkedList<vPair> que = new LinkedList<>();
+        que.addLast(new vPair(Math.abs(minmax[0]),root));
+
+        while(que.size() != 0){
+            int size = que.size();
+            // vPair nw = que.getFirst();
+            
+            while(size-- > 0){
+                vPair rnode = que.removeFirst();
+                ans.get(rnode.vl).add(rnode.node.val);
+                if(rnode.node.left != null) que.addLast(new vPair(rnode.vl -1,rnode.node.left));
+                if(rnode.node.right != null) que.addLast(new vPair(rnode.vl +1,rnode.node.right));
+            }
+        }
+        return ans;
+    }
+
+
+    public static ArrayList<ArrayList<Integer>> diagonalOrder(TreeNode root) {
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        if(root == null) return;
+        LinkedList<TreeNode> que=new LinkedList<>();
+        que.addLast(root);
+        while(que.size() != 0){
+            int size = que.size();
+            ArrayList<Integer> smallAns=new ArrayList<>();
+            while(size-- > 0){
+                TreeNode node = que.removeFirst();
+                
+                smallAns.add(node.val);
+                if(node.left != null){
+                    que.addLast(node);
+                }
+                
+            }
+        }
+        return ans;
     }
 }
